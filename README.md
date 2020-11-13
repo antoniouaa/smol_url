@@ -1,3 +1,3 @@
-Lets try this again
+## smol_url
 
-brr
+React app to fetch you shortened URLs on request
