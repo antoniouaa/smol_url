@@ -25,6 +25,7 @@ export default function InputTextBox(props) {
         <input type="submit" value="Submit" />
       </form>
       <p>Your new URL is {longUrl}</p>
+      <p>Your token is {process.env.REACT_APP_BITLY_TOKEN}</p>
     </>
   );
 }
