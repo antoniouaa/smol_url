@@ -1,29 +1,30 @@
 import React, { useState } from "react";
-// import axios from "axios";
-
-import "./InputTextBox.css";
 
 export default function InputTextBox(props) {
-  const [url, setUrl] = useState("");
+  const [longUrl, setUrl] = useState("");
+
+  const makeRequest = async (url) => {
+    let resp = await fetch("https://httpbin.org/get");
+    let data = await resp.json();
+    return data;
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    makeRequest()
+      .then((d) => {
+        setUrl(`${d.url}/${e.target.url.value}`);
+      })
+      .catch((e) => console.log(e));
+  };
 
   return (
     <>
-      <form
-        className="form"
-        onSubmit={(e) => {
-          e.preventDefault();
-          alert("New submission" + e.target.value);
-        }}>
-        <div>
-          <label htmlFor="input-text-box">URL to shorten</label>
-          <input
-            name="input-text-box"
-            type="text"
-            placeholder="URL"
-            onInput={(e) => setUrl(e.target.value)}></input>
-        </div>
+      <form onSubmit={handleSubmit}>
+        <input type="text" name="url" />
+        <input type="submit" value="Submit" />
       </form>
-      <p>Hello world, the URL is {url}</p>
+      <p>Your new URL is {longUrl}</p>
     </>
   );
 }
