@@ -3,19 +3,32 @@ import React, { useState } from "react";
 export default function InputTextBox(props) {
   const [longUrl, setUrl] = useState("");
 
-  const makeRequest = async (url) => {
-    let resp = await fetch("https://httpbin.org/get");
-    let data = await resp.json();
-    return data;
+  const makeRequest = (url) => {
+    let headers = new Headers();
+    const payload = JSON.stringify({
+      domain: "bit.ly",
+      long_url: url,
+    });
+    headers.append(
+      "Authorization",
+      `Bearer ${process.env.REACT_APP_BITLY_TOKEN}`
+    );
+    headers.append("Content-Type", "application/json");
+    const requestOptions = {
+      method: "POST",
+      headers: headers,
+      body: payload,
+      redirect: "follow",
+    };
+    fetch("https://api-ssl.bitly.com/v4/shorten", requestOptions)
+      .then((response) => response.json())
+      .then((result) => setUrl(result.link))
+      .catch((error) => console.log("error", error));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    makeRequest()
-      .then((d) => {
-        setUrl(`${d.url}/${e.target.url.value}`);
-      })
-      .catch((e) => console.log(e));
+    makeRequest(e.target.url.value);
   };
 
   return (
