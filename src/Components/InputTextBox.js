@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 
+import "./InputTextBox.css";
+
 export default function InputTextBox(props) {
   const [longUrl, setUrl] = useState("");
 
@@ -31,14 +33,23 @@ export default function InputTextBox(props) {
     makeRequest(e.target.url.value);
   };
 
+  const subHeading = (url) => {
+    if (url) {
+      return <p>Your new URL is {url}</p>;
+    } else {
+      return <p>Enter a URL to smol_ify</p>;
+    }
+  };
+
   return (
     <>
-      <form onSubmit={handleSubmit}>
-        <input type="text" name="url" />
-        <input type="submit" value="Submit" />
-      </form>
-      <p>Your new URL is {longUrl}</p>
-      <p>Your token is {process.env.REACT_APP_BITLY_TOKEN}</p>
+      <div className="container">
+        <form onSubmit={handleSubmit} className="container form">
+          <input type="text" name="url" id="textbox" />
+          <input type="submit" value="smol_ify" id="submit-button" />
+        </form>
+      </div>
+      {subHeading(longUrl)}
     </>
   );
 }
