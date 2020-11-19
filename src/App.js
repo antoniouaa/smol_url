@@ -6,7 +6,7 @@ import Footer from "./Components/Footer";
 
 function App() {
   return (
-    <div className="App App-header">
+    <div className="App">
       <div className="header">
         <Title />
         <InputTextBox />
