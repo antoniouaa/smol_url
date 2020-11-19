@@ -1,0 +1,10 @@
+.footer-container {
+    display: flex;
+    background-color: var(--background-primary);
+    justify-content: center;
+    color: #fff
+}
+
+a {
+    color: var(--primary-color)
+}
